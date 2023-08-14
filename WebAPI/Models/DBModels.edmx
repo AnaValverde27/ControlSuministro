@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ControlSuministrosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoProducto" Type="int" />
+          <Property Name="FechaPedido" Type="date" Nullable="false" />
+          <Property Name="CantidadPedido" Type="int" Nullable="false" />
+          <Property Name="PrecioUnidad" Type="money" Nullable="false" />
+          <Property Name="FechaEntrega" Type="date" Nullable="false" />
+          <Property Name="PersonaEntrega" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Empresa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PersonaRecibe" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumeroFactura" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Retiros">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoProducto" Type="int" />
+          <Property Name="FechaEntrega" Type="date" Nullable="false" />
+          <Property Name="CantidadRetiro" Type="int" Nullable="false" />
+          <Property Name="NombreCompleto" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Suministros">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="UnidadMedida" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CantidadMinima" Type="int" Nullable="false" />
+          <Property Name="CantidadMaxima" Type="int" Nullable="false" />
+          <Property Name="CantidadActual" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Pedidos__CodigoP__398D8EEE">
+          <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suministros">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Retiros__CodigoP__3C69FB99">
+          <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+          <End Role="Retiros" Type="Self.Retiros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suministros">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Retiros">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ControlSuministrosModelStoreContainer">
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Retiros" EntityType="Self.Retiros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suministros" EntityType="Self.Suministros" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Pedidos__CodigoP__398D8EEE" Association="Self.FK__Pedidos__CodigoP__398D8EEE">
+            <End Role="Suministros" EntitySet="Suministros" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Retiros__CodigoP__3C69FB99" Association="Self.FK__Retiros__CodigoP__3C69FB99">
+            <End Role="Suministros" EntitySet="Suministros" />
+            <End Role="Retiros" EntitySet="Retiros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ControlSuministrosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoProducto" Type="Int32" />
+          <Property Name="FechaPedido" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CantidadPedido" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnidad" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PersonaEntrega" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonaRecibe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumeroFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Suministros" Relationship="Self.FK__Pedidos__CodigoP__398D8EEE" FromRole="Pedidos" ToRole="Suministros" />
+        </EntityType>
+        <EntityType Name="Retiros">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoProducto" Type="Int32" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CantidadRetiro" Type="Int32" Nullable="false" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Suministros" Relationship="Self.FK__Retiros__CodigoP__3C69FB99" FromRole="Retiros" ToRole="Suministros" />
+        </EntityType>
+        <EntityType Name="Suministros">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnidadMedida" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CantidadMinima" Type="Int32" Nullable="false" />
+          <Property Name="CantidadMaxima" Type="Int32" Nullable="false" />
+          <Property Name="CantidadActual" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK__Pedidos__CodigoP__398D8EEE" FromRole="Suministros" ToRole="Pedidos" />
+          <NavigationProperty Name="Retiros" Relationship="Self.FK__Retiros__CodigoP__3C69FB99" FromRole="Suministros" ToRole="Retiros" />
+        </EntityType>
+        <Association Name="FK__Pedidos__CodigoP__398D8EEE">
+          <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suministros">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Retiros__CodigoP__3C69FB99">
+          <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+          <End Role="Retiros" Type="Self.Retiros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suministros">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Retiros">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModels" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+          <EntitySet Name="Retiros" EntityType="Self.Retiros" />
+          <EntitySet Name="Suministros" EntityType="Self.Suministros" />
+          <AssociationSet Name="FK__Pedidos__CodigoP__398D8EEE" Association="Self.FK__Pedidos__CodigoP__398D8EEE">
+            <End Role="Suministros" EntitySet="Suministros" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Retiros__CodigoP__3C69FB99" Association="Self.FK__Retiros__CodigoP__3C69FB99">
+            <End Role="Suministros" EntitySet="Suministros" />
+            <End Role="Retiros" EntitySet="Retiros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ControlSuministrosModelStoreContainer" CdmEntityContainer="DBModels">
+          <EntitySetMapping Name="Pedidos">
+            <EntityTypeMapping TypeName="ControlSuministrosModel.Pedidos">
+              <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="CodigoProducto" ColumnName="CodigoProducto" />
+                <ScalarProperty Name="FechaPedido" ColumnName="FechaPedido" />
+                <ScalarProperty Name="CantidadPedido" ColumnName="CantidadPedido" />
+                <ScalarProperty Name="PrecioUnidad" ColumnName="PrecioUnidad" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="PersonaEntrega" ColumnName="PersonaEntrega" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="PersonaRecibe" ColumnName="PersonaRecibe" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Retiros">
+            <EntityTypeMapping TypeName="ControlSuministrosModel.Retiros">
+              <MappingFragment StoreEntitySet="Retiros">
+                <ScalarProperty Name="NumeroSolicitud" ColumnName="NumeroSolicitud" />
+                <ScalarProperty Name="CodigoProducto" ColumnName="CodigoProducto" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="CantidadRetiro" ColumnName="CantidadRetiro" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suministros">
+            <EntityTypeMapping TypeName="ControlSuministrosModel.Suministros">
+              <MappingFragment StoreEntitySet="Suministros">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="UnidadMedida" ColumnName="UnidadMedida" />
+                <ScalarProperty Name="CantidadMinima" ColumnName="CantidadMinima" />
+                <ScalarProperty Name="CantidadMaxima" ColumnName="CantidadMaxima" />
+                <ScalarProperty Name="CantidadActual" ColumnName="CantidadActual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

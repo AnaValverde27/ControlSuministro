@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ControlSuministrosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="IdPedido" />
+    </Key>
+    <Property Name="IdPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodigoProducto" Type="Int32" />
+    <Property Name="FechaPedido" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CantidadPedido" Type="Int32" Nullable="false" />
+    <Property Name="PrecioUnidad" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PersonaEntrega" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PersonaRecibe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NumeroFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Suministros" Relationship="Self.FK__Pedidos__CodigoP__398D8EEE" FromRole="Pedidos" ToRole="Suministros" />
+  </EntityType>
+  <EntityType Name="Retiros">
+    <Key>
+      <PropertyRef Name="NumeroSolicitud" />
+    </Key>
+    <Property Name="NumeroSolicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodigoProducto" Type="Int32" />
+    <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CantidadRetiro" Type="Int32" Nullable="false" />
+    <Property Name="NombreCompleto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Suministros" Relationship="Self.FK__Retiros__CodigoP__3C69FB99" FromRole="Retiros" ToRole="Suministros" />
+  </EntityType>
+  <EntityType Name="Suministros">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UnidadMedida" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CantidadMinima" Type="Int32" Nullable="false" />
+    <Property Name="CantidadMaxima" Type="Int32" Nullable="false" />
+    <Property Name="CantidadActual" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK__Pedidos__CodigoP__398D8EEE" FromRole="Suministros" ToRole="Pedidos" />
+    <NavigationProperty Name="Retiros" Relationship="Self.FK__Retiros__CodigoP__3C69FB99" FromRole="Suministros" ToRole="Retiros" />
+  </EntityType>
+  <Association Name="FK__Pedidos__CodigoP__398D8EEE">
+    <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suministros">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="CodigoProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Retiros__CodigoP__3C69FB99">
+    <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+    <End Role="Retiros" Type="Self.Retiros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suministros">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Retiros">
+        <PropertyRef Name="CodigoProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBModels" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+    <EntitySet Name="Retiros" EntityType="Self.Retiros" />
+    <EntitySet Name="Suministros" EntityType="Self.Suministros" />
+    <AssociationSet Name="FK__Pedidos__CodigoP__398D8EEE" Association="Self.FK__Pedidos__CodigoP__398D8EEE">
+      <End Role="Suministros" EntitySet="Suministros" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Retiros__CodigoP__3C69FB99" Association="Self.FK__Retiros__CodigoP__3C69FB99">
+      <End Role="Suministros" EntitySet="Suministros" />
+      <End Role="Retiros" EntitySet="Retiros" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

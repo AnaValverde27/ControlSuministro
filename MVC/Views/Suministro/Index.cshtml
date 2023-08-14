@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MVC.Models.mvcSuministroModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Inventario</h2>
+
+<div class="form-group mt-5">
+    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por código">
+</div>
+
+<table class="table" id="inventoryTable">
+    <!-- Encabezados de columna -->
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Codigo)</th>
+        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+        <th>@Html.DisplayNameFor(model => model.UnidadMedida)</th>
+        <th>@Html.DisplayNameFor(model => model.CantidadMinima)</th>
+        <th>@Html.DisplayNameFor(model => model.CantidadMaxima)</th>
+        <th>@Html.DisplayNameFor(model => model.CantidadActual)</th>
+        <th></th>
+    </tr>
+
+    <!-- Filas de datos -->
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
+    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+    <td>@Html.DisplayFor(modelItem => item.UnidadMedida)</td>
+    <td>@Html.DisplayFor(modelItem => item.CantidadMinima)</td>
+    <td>@Html.DisplayFor(modelItem => item.CantidadMaxima)</td>
+    <td>@Html.DisplayFor(modelItem => item.CantidadActual)</td>
+    <td>
+        @Html.ActionLink("Actualizar", "Edit", new { id = item.Codigo }) |
+        @Html.ActionLink("Retirar", "Retirar", new { id = item.Codigo })
+    </td>
+</tr>
+    }
+</table>
+
+<script>
+    // Función para filtrar la tabla basada en el valor de búsqueda
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("inventoryTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // Cambia [0] para buscar en la columna de código
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Asigna el evento de input a la función de filtrado
+    document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>

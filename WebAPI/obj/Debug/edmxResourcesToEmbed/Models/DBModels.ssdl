@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ControlSuministrosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="IdPedido" />
+    </Key>
+    <Property Name="IdPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CodigoProducto" Type="int" />
+    <Property Name="FechaPedido" Type="date" Nullable="false" />
+    <Property Name="CantidadPedido" Type="int" Nullable="false" />
+    <Property Name="PrecioUnidad" Type="money" Nullable="false" />
+    <Property Name="FechaEntrega" Type="date" Nullable="false" />
+    <Property Name="PersonaEntrega" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Empresa" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PersonaRecibe" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NumeroFactura" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Retiros">
+    <Key>
+      <PropertyRef Name="NumeroSolicitud" />
+    </Key>
+    <Property Name="NumeroSolicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CodigoProducto" Type="int" />
+    <Property Name="FechaEntrega" Type="date" Nullable="false" />
+    <Property Name="CantidadRetiro" Type="int" Nullable="false" />
+    <Property Name="NombreCompleto" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Suministros">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="UnidadMedida" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="CantidadMinima" Type="int" Nullable="false" />
+    <Property Name="CantidadMaxima" Type="int" Nullable="false" />
+    <Property Name="CantidadActual" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Pedidos__CodigoP__398D8EEE">
+    <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suministros">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="CodigoProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Retiros__CodigoP__3C69FB99">
+    <End Role="Suministros" Type="Self.Suministros" Multiplicity="0..1" />
+    <End Role="Retiros" Type="Self.Retiros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suministros">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Retiros">
+        <PropertyRef Name="CodigoProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ControlSuministrosModelStoreContainer">
+    <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Retiros" EntityType="Self.Retiros" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Suministros" EntityType="Self.Suministros" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Pedidos__CodigoP__398D8EEE" Association="Self.FK__Pedidos__CodigoP__398D8EEE">
+      <End Role="Suministros" EntitySet="Suministros" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Retiros__CodigoP__3C69FB99" Association="Self.FK__Retiros__CodigoP__3C69FB99">
+      <End Role="Suministros" EntitySet="Suministros" />
+      <End Role="Retiros" EntitySet="Retiros" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
